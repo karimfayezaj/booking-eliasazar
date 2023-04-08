@@ -1,0 +1,45 @@
+.welcome-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f2f2f2;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  button {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .login-button {
+    background-color: #0066cc;
+  }
+  
+  .login-button:hover {
+    background-color: #0052a3;
+  }
+  
+  .signup-button {
+    background-color: #00cc66;
+  }
+  
+  .signup-button:hover {
+    background-color: #00b359;
+  }
+  
