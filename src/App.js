@@ -2,6 +2,7 @@ import Parse from 'parse/dist/parse.min.js';
 import WelcomePage from './Screens/WelcomePage';
 import RegistrationPage from './Screens/RegistrationPage';
 import LoginPage from './Screens/LoginPage';
+import RoomPage from './Screens/RoomPage';
 
 
 // Your Parse initialization configuration goes here
@@ -18,9 +19,11 @@ Parse.serverURL = PARSE_HOST_URL;
 function App() {
   return (
     <div>
-      <WelcomePage />
+      {/* <WelcomePage />
       <RegistrationPage />
-      <LoginPage />
+      <LoginPage /> */}
+      <RoomPage />
+
     </div>
   );
 }
