@@ -1,28 +1,31 @@
-import Parse from 'parse/dist/parse.min.js';
+import { initializeApp } from "firebase/app";
+
 import WelcomePage from './Screens/WelcomePage';
 import RegistrationPage from './Screens/RegistrationPage';
 import LoginPage from './Screens/LoginPage';
 import RoomPage from './Screens/RoomPage';
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBZsoXXiB200-D4m3XTxWfslzBeJ30zDrU",
+  authDomain: "eliasazar-fece6.firebaseapp.com",
+  databaseURL: "https://eliasazar-fece6-default-rtdb.firebaseio.com",
+  projectId: "eliasazar-fece6",
+  storageBucket: "eliasazar-fece6.appspot.com",
+  messagingSenderId: "1055533390822",
+  appId: "1:1055533390822:web:af7960209a308252731427",
+  measurementId: "G-LTFXW6M7LM"
+};
 
-// Your Parse initialization configuration goes here
-
-
-const PARSE_APPLICATION_ID = 'NJ3k1bBmN6a2rHeuyqMh7NH3kZ0uYwSllER52cHc';
-const PARSE_HOST_URL = 'https://parseapi.back4app.com/';
-const PARSE_JAVASCRIPT_KEY = 'iBnhIZNgNX9HtV1oyIWahEvayvwsG4kgJ8KZ50s7';
-Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
-Parse.serverURL = PARSE_HOST_URL;
-
-
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 function App() {
   return (
     <div>
-      {/* <WelcomePage />
-      <RegistrationPage />
-      <LoginPage /> */}
-      <RoomPage />
+      <WelcomePage />
+      <RegistrationPage appConfig={app} />
+      <LoginPage />
+      {/* <RoomPage /> */}
 
     </div>
   );

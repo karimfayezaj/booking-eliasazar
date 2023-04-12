@@ -5,14 +5,10 @@ const RoomPage = () => {
 
     const bookThisRoom = () => {
         console.log('Book this room');
-
-
     }
 
     const availableRooms = [
-
     ];
-
 
     return <div>
         <Card
@@ -49,11 +45,7 @@ const RoomPage = () => {
             imgSrc={require('../assets/Room42.jpeg')}
             bookThisRoom={bookThisRoom}
         />
-
-
     </div>
-
-
 }
 
 

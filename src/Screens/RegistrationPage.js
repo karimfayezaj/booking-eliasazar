@@ -1,39 +1,39 @@
 
 import React, { useRef } from "react";
-import Parse from 'parse/dist/parse.min.js';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 import "./RegistrationPage.css";
 
-const RegistrationPage = () => {
-    const doUserRegistration = async function (event) {
+
+const RegistrationPage = ({ appConfig }) => {
+    const auth = getAuth(appConfig);
+
+    const registerUser = (event) => {
         event.preventDefault();
-        // Note that these values come from state variables that we've declared before
-        const usernameValue = signUpRef.current.username.value;
-        const passwordValue = signUpRef.current.password.value;
-        try {
-            // Since the signUp method returns a Promise, we need to call it using await
-            const createdUser = await Parse.User.signUp(usernameValue, passwordValue);
-            alert(
-                `Success! User ${createdUser.getUsername()} was successfully created!`
-            );
-            console.log('Done');
-            return true;
-        } catch (error) {
-            // signUp can fail if any parameter is blank or failed an uniqueness check on the server
-            alert(`Error! ${error}`);
-            console.log('Not Done');
-            return false;
-        }
-    };
-
-
+        createUserWithEmailAndPassword(
+            auth,
+            signUpRef.current.email.value,
+            signUpRef.current.password.value,
+        )
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode + '\n' + errorMessage);
+                // ..
+            });
+    }
     const signUpRef = useRef();
 
-
     return <section className="registration-page">
-        <form ref={signUpRef} onSubmit={doUserRegistration}>
-            <input id="username" placeholder="Username" />
-            <input id="password" type="password" placeholder="Password" />
+        <form ref={signUpRef} onSubmit={registerUser}>
             <input id="email" placeholder="Email" />
+            <input id="password" type="password" placeholder="Password" />
             <button type="submit">Submit</button>
         </form>
     </section>
