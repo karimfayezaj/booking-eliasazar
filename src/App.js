@@ -5,9 +5,8 @@ import { getAuth } from "firebase/auth";
 
 
 import WelcomePage from './Screens/WelcomePage';
-import RegistrationPage from './Screens/RegistrationPage';
-import LoginPage from './Screens/LoginPage';
 import RoomPage from './Screens/RoomPage';
+import SignUserForm from './Interfaces/SignUserForm';
 
 
 
@@ -19,7 +18,7 @@ const firebaseConfig = {
   storageBucket: "eliasazar-fece6.appspot.com",
   messagingSenderId: "1055533390822",
   appId: "1:1055533390822:web:af7960209a308252731427",
-  measurementId: "G-LTFXW6M7LM"
+  measurementId: "G-LTFXW6M7LM",
 };
 
 // Initialize Firebase
@@ -27,14 +26,15 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 
-const getCurrentUser = () => {
-  const user = auth.currentUser;
-  console.log(user);
-}
-
 function App() {
 
   const [userSignedIn, setuserSignedIn] = useState(false);
+  const currentUser = auth.currentUser;
+
+  const getCurrentUser = () => {
+    console.log(currentUser);
+  }
+
 
   const changedAuthState = (change) => {
     setuserSignedIn(change);
@@ -46,20 +46,17 @@ function App() {
     console.log('User signed Out');
   }
 
-
-
-
   return (
     <div>
       {userSignedIn ?
         <div>
-          <RoomPage />
+          <RoomPage appConfig={app} currentUser={currentUser} />
           <button onClick={getCurrentUser}>Get User</button>
           <button onClick={logOutUser}>LogOut</button>
         </div> :
-        <div><WelcomePage />
-          <RegistrationPage appConfig={app} userState={changedAuthState} />
-          <LoginPage appConfig={app} userState={changedAuthState} />
+        <div>
+          <WelcomePage />
+          <SignUserForm appConfig={app} userState={changedAuthState} currentUser={currentUser} />
         </div>
       }
     </div>

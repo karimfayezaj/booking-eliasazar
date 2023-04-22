@@ -6,8 +6,7 @@ function WelcomePage() {
         <div className="welcome-page">
             <h1>Welcome to Hotel Bookings</h1>
             <div className="buttons">
-                <button className="login-button">Log In</button>
-                <button className="signup-button">Sign Up</button>
+                <button className="login-button">My Account</button>
             </div>
         </div>
     );

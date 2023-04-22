@@ -5,7 +5,7 @@ const Card = (props) => {
     return (
         <div className='container'>
             <div className="card">
-                <img src={props.imgSrc} alt="Room" />
+                <img alt="Room" id={props.imgID} />
                 <div className="card-content">
                     <h2 className="card-title">{props.title}</h2>
                     <p className="card-description">
@@ -13,7 +13,7 @@ const Card = (props) => {
                     </p>
                     <div className="card-footer">
                         <div className="price-tag">${props.price}</div>
-                        <button className="book-button" onClick={props.bookThisRoom}>Book this room</button>
+                        <button id={props.title} className="book-button" onClick={props.bookThisRoom}>Book this room</button>
                     </div>
                 </div>
             </div>
