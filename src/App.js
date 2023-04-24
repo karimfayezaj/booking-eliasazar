@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { Fragment, useState, useRef } from 'react';
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+import { getDatabase, ref, get, child } from "firebase/database";
 
-import WelcomePage from './Screens/WelcomePage';
-import RoomPage from './Screens/RoomPage';
-import SignUserForm from './Interfaces/SignUserForm';
+
+import RoomBookingModal from './Interfaces/RoomBookingModal';
+import UserMainScreen from './Screens/UserMainScreen';
+import AppMainScreen from './Screens/AppMainScreen';
 
 
 
@@ -24,12 +26,28 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const database = getDatabase(app);
 
 
 function App() {
 
+  const databaseRef = ref(database);
+
   const [userSignedIn, setuserSignedIn] = useState(false);
+
+  let modalData = useRef();
+  const [modal, setModal] = useState(false);
+
   const currentUser = auth.currentUser;
+
+
+  // function that just changes the state of the modal to true
+  // this means the modal would be visible after triggering this function
+  const showModal = () => setModal(true);
+
+  // function that just changes the state of the modal to false
+  // this means the modal would be hidden after triggering this function
+  const hideModal = () => setModal(false);
 
   const getCurrentUser = () => {
     console.log(currentUser);
@@ -46,20 +64,44 @@ function App() {
     console.log('User signed Out');
   }
 
+
+  const bookThisRoom = () => {
+    console.log(modalData.current['checkIn'].value);
+    console.log(modalData.current['checkOut'].value);
+    get(child(databaseRef, `/Room40`))
+      .then((response) => {
+        console.log(response.toJSON());
+      });
+
+  }
+
   return (
-    <div>
-      {userSignedIn ?
-        <div>
-          <RoomPage appConfig={app} currentUser={currentUser} />
-          <button onClick={getCurrentUser}>Get User</button>
-          <button onClick={logOutUser}>LogOut</button>
-        </div> :
-        <div>
-          <WelcomePage />
-          <SignUserForm appConfig={app} userState={changedAuthState} currentUser={currentUser} />
-        </div>
-      }
-    </div>
+    <Fragment>
+      {modal && <RoomBookingModal
+        hideModal={hideModal}
+        bookThisRoom={bookThisRoom}
+        modalData={modalData}
+      />}
+      <main>
+        {userSignedIn ?
+          <UserMainScreen
+            app={app}
+            currentUser={currentUser}
+            showModal={showModal}
+            getCurrentUser={getCurrentUser}
+            logOutUser={logOutUser}
+          />
+          :
+          <AppMainScreen
+            app={app}
+            changedAuthState={changedAuthState}
+            currentUser={currentUser}
+          />
+        }
+      </main>
+
+    </Fragment>
+
   );
 }
 

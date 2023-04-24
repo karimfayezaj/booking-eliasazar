@@ -4,7 +4,8 @@ import Card from "../Components/Card";
 import { getStorage, ref, getDownloadURL, list } from "firebase/storage";
 
 
-const RoomPage = ({ appConfig, currentUser }) => {
+
+const RoomPage = ({ appConfig, currentUser, showModal }) => {
     const storage = getStorage(appConfig);
 
 
@@ -40,7 +41,7 @@ const RoomPage = ({ appConfig, currentUser }) => {
     const bookThisRoom = (event) => {
         console.log(event.target.id);
         console.log(currentUser.uid);
-
+        showModal();
     }
 
     return <div>
@@ -58,7 +59,7 @@ const RoomPage = ({ appConfig, currentUser }) => {
             title={listOfRooms[1].toString()}
             description="Room for two"
             price='19.99'
-            bookThisRoom={bookThisRoom}
+            bookThisRoom={showModal}
         />
         <Card
             imgID={listOfRooms[2].toString()}
@@ -66,7 +67,7 @@ const RoomPage = ({ appConfig, currentUser }) => {
             title={listOfRooms[2].toString()}
             description="Room for two"
             price='19.99'
-            bookThisRoom={bookThisRoom}
+            bookThisRoom={showModal}
         />
         <Card
             imgID={listOfRooms[3].toString()}
@@ -74,7 +75,7 @@ const RoomPage = ({ appConfig, currentUser }) => {
             title={listOfRooms[3].toString()}
             description="Room for two"
             price='19.99'
-            bookThisRoom={bookThisRoom}
+            bookThisRoom={showModal}
         />
     </div>
 }
